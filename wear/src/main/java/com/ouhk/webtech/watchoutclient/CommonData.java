@@ -6,4 +6,5 @@ package com.ouhk.webtech.watchoutclient;
 class CommonData {
     public static final String LOGCATAG = "wearLogCat";
 
+
 }

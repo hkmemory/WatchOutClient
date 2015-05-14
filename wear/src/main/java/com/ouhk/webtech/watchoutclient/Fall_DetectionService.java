@@ -87,6 +87,7 @@ public class Fall_DetectionService extends Service implements SensorEventListene
     }
 
     public void onConnected(Bundle bundle) {
+        Wearable.DataApi.addListener(client, this);
         setupConfirmationHandlerNode();
         invokeANNService();
         // Vibrator myVibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
@@ -114,21 +115,11 @@ public class Fall_DetectionService extends Service implements SensorEventListene
                 DataMapItem dataMapItem = DataMapItem.fromDataItem(event.getDataItem());
                 String watchMotionDataObj = dataMapItem.getDataMap().getString("Data");
                 Log.d(CommonData.LOGCATAG, "Length " + Integer.toString(watchMotionDataObj.length()));
-                //SockData.getOutStream().write(watchMotionDataObj.getBytes(Charset.forName("UTF-8")));
-                Thread.sleep(250);
                 JSONArray json = new JSONArray(watchMotionDataObj);
                 for (int i = 0; i < json.length(); i++) {
-                    int func = json.getJSONObject(i).getInt("func");
-                    String status = json.getJSONObject(i).getString("status");
-                    switch (func) {
-                        case 1:
-                            //displayNotification(status);
-                            break;
-                    }
-
                     Log.d(CommonData.LOGCATAG, watchMotionDataObj);
                 }
-            } catch (InterruptedException | JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
     }
